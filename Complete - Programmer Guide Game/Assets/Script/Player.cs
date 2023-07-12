@@ -1,6 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IActorTemplate
+public class Player : MonoBehaviour
 {
     int travelSpeed;
     int health;
@@ -24,16 +26,14 @@ public class Player : MonoBehaviour, IActorTemplate
     float width;
     float height;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        height = 1 / (Camera.main.WorldToViewportPoint(new Vector3(1, 1, 0)).y - 0.5f);
-        width = 1 / (Camera.main.WorldToViewportPoint(new Vector3(1, 1, 0)).x - 0.5f);
+        height = 1 / (Camera.main.WorldToViewportPoint(new Vector3(1, 1, 0)).y - .5f);
+        width = 1 / (Camera.main.WorldToViewportPoint(new Vector3(1, 1, 0)).x - .5f);
         _Player = GameObject.Find("_Player");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         Movement();
         Attack();
@@ -44,17 +44,7 @@ public class Player : MonoBehaviour, IActorTemplate
         health = actorModel.health;
         travelSpeed = actorModel.speed;
         hitPower = actorModel.hitPower;
-        fire = actorModel.actorsBullets;
-    }
-
-    public void TakeDamage(int incomingDamage)
-    {
-        health -= incomingDamage;
-    }
-
-    public int SendDamage()
-    {
-        return hitPower;
+        fire = actorModel.actorBullets;
     }
 
     void OnTriggerEnter(Collider other)
@@ -65,8 +55,10 @@ public class Player : MonoBehaviour, IActorTemplate
             {
                 if (transform.Find("energy +1(Clone)"))
                 {
-                    Destroy(transform.Find("energy +1(Clone)").gameObject);
-                    health -= other.GetComponent<IActorTemplate>().SendDamage();
+                    Destroy(transform.Find("energy +1(Clone)").
+                    gameObject);
+                    health -= other.GetComponent<IActorTemplate>
+                    ().SendDamage();
                 }
                 else
                 {
@@ -78,6 +70,15 @@ public class Player : MonoBehaviour, IActorTemplate
                 Die();
             }
         }
+    }
+
+    public void TakeDamage(int incomingDamage)
+    {
+        health -= incomingDamage;
+    }
+    public int SendDamage()
+    {
+        return hitPower;
     }
 
     void Movement()
@@ -121,21 +122,21 @@ public class Player : MonoBehaviour, IActorTemplate
             }
         }
     }
-
     public void Die()
     {
         Destroy(this.gameObject);
     }
-
     public void Attack()
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            GameObject bullet = GameObject.Instantiate(fire, transform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as GameObject;
+            GameObject bullet = GameObject.Instantiate
+            (fire, transform.position, Quaternion.Euler
+            (new Vector3(0, 0, 0))) as GameObject;
             bullet.transform.SetParent(_Player.transform);
             bullet.transform.localScale = new Vector3(7, 7, 7);
         }
     }
-
-
 }
+
+

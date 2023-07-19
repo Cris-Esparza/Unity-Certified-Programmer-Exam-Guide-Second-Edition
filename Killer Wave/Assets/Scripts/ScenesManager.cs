@@ -26,4 +26,9 @@ public class ScenesManager : MonoBehaviour
     {
         SceneManager.LoadScene("gameOver");
     }
+
+    public void BeginGame()
+    {
+        SceneManager.LoadScene("testLevel");
+    }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IActorTemplate
 {
     int travelSpeed;
     int health;
@@ -124,6 +124,7 @@ public class Player : MonoBehaviour
     }
     public void Die()
     {
+        GameManager.Instance.LifeLost();
         Destroy(this.gameObject);
     }
     public void Attack()

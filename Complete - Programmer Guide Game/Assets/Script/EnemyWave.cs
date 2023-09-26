@@ -13,6 +13,7 @@ public class EnemyWave : MonoBehaviour, IActorTemplate
     float verticalAmplitude = 1;
     Vector3 sineVer;
     float time;
+    int score;
 
     void Update()
     {
@@ -24,6 +25,7 @@ public class EnemyWave : MonoBehaviour, IActorTemplate
         health = actorModel.health;
         travelSpeed = actorModel.speed;
         hitPower = actorModel.hitPower;
+        score = actorModel.score;
     }
     public void Die()
     {
@@ -37,11 +39,11 @@ public class EnemyWave : MonoBehaviour, IActorTemplate
         {
             if (health >= 1)
             {
-                health -= other.GetComponent<IActorTemplate>
-                ().SendDamage();
+                health -= other.GetComponent<IActorTemplate>().SendDamage();
             }
             if (health <= 0)
             {
+                GameManager.Instance.GetComponent<ScoreManager>().SetScore(score);
                 Die();
             }
         }

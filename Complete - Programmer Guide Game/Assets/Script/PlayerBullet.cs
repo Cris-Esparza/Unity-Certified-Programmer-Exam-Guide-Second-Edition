@@ -46,9 +46,7 @@ public class PlayerBullet : MonoBehaviour, IActorTemplate
             {
                 if (health >= 1)
                 {
-                    health -= other.
-                    GetComponent<IActorTemplate>
-                    ().SendDamage();
+                    health -= other.GetComponent<IActorTemplate>().SendDamage();
                 }
                 if (health <= 0)
                 {

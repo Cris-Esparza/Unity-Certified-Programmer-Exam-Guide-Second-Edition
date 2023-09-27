@@ -282,10 +282,6 @@ public class PlayerShipBuild : MonoBehaviour, IUnityAdsListener, IUnityAdsInitia
 	}
 }
 
-internal interface IUnityAdsInitializationListener
-{
-}
-
 internal interface IUnityAdsListener
 {
 }

@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class ScenesManager : MonoBehaviour
 {
+    float gameTimer = 0;
+    float[] endLeveltimer = { 30, 30, 45 };
+    int currentSceneNumber = 0;
+    bool gameEnding = false;
+
     Scenes scenes;
     public enum Scenes
     {
@@ -17,9 +22,20 @@ public class ScenesManager : MonoBehaviour
         gameOver
     }
 
+    void Update()
+    {
+        if (currentSceneNumber != SceneManager.GetActiveScene().buildIndex)
+        {
+            currentSceneNumber = SceneManager.GetActiveScene().buildIndex;
+            GetScene();
+        }
+        GameTimer();
+    }
+
     public void ResetScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        gameTimer = 0;
+        SceneManager.LoadScene(GameManager.currentScene);
     }
 
     public void GameOver()
@@ -28,8 +44,53 @@ public class ScenesManager : MonoBehaviour
         SceneManager.LoadScene("gameOver");
     }
 
-    public void BeginGame()
+    public void BeginGame(int gameLevel)
     {
-        SceneManager.LoadScene("testLevel");
+        SceneManager.LoadScene(gameLevel);
+    }
+    
+    void GetScene()
+    {
+        scenes = (Scenes)currentSceneNumber;
+    }
+
+    void NextLevel()
+    {
+        gameEnding = false;
+        gameTimer = 0;
+        SceneManager.LoadScene(GameManager.currentScene + 1);
+    }
+    
+    void GameTimer()
+    {
+        switch(scenes)
+        {
+            case Scenes.Level1: case Scenes.Level2: case Scenes.Level3:
+                {
+                    if (gameTimer < endLeveltimer[currentSceneNumber - 3])
+                    {
+                        // if level has not been completed
+                        gameTimer += Time.deltaTime;
+                    }
+                    else
+                    {
+                        // if level is cimpleted
+                        if (!gameEnding)
+                        {
+                            gameEnding = true;
+                            if (SceneManager.GetActiveScene().name != "level3")
+                            {
+                                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerTransition>().LevelEnds = true;
+                            }
+                            else
+                            {
+                                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerTransition>().GameCompleted = true;
+                            }
+                            Invoke("NextLevel", 4);
+                        }
+                    }
+                    break;
+                }
+        }
     }
 }

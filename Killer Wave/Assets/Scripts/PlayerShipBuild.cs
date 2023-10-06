@@ -99,7 +99,7 @@ public class PlayerShipBuild : MonoBehaviour
                 }
                 else if (target.name == "START")
                 {
-
+                    StartGame();
                 }
             }
         }
@@ -181,5 +181,19 @@ public class PlayerShipBuild : MonoBehaviour
         GameObject shipItem = GameObject.Instantiate(Resources.Load(upgrade)) as GameObject;
         shipItem.transform.SetParent(playerShip.transform);
         shipItem.transform.localPosition = Vector3.zero;
+    }
+
+    void StartGame()
+    {
+        if (purchaseMade)
+        {
+            playerShip.name = "UpgradedShip";
+            if (playerShip.transform.Find("energy +1(Clone)"))
+            {
+                playerShip.GetComponent<Player>().Health = 2;
+            }
+            DontDestroyOnLoad(playerShip);
+        }
+        UnityEngine.SceneManagement.SceneManager.LoadScene("testLevel");
     }
 }

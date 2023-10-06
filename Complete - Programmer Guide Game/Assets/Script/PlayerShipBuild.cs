@@ -76,7 +76,7 @@ public class PlayerShipBuild : MonoBehaviour, IUnityAdsListener, IUnityAdsInitia
 		adId = "Rewarded_Android";
 	}
 #endif
-        Advertisement.Initialize(gameId, testMode, false, this);
+		Advertisement.Initialize(gameId, testMode, false,this);
 	}
 
 	void TurnOffSelectionHighlights()
@@ -280,8 +280,4 @@ public class PlayerShipBuild : MonoBehaviour, IUnityAdsListener, IUnityAdsInitia
 	{
 		Debug.Log($"Unity Ads Initialization Failed: {error.ToString()} - {message}");
 	}
-}
-
-internal interface IUnityAdsListener
-{
 }

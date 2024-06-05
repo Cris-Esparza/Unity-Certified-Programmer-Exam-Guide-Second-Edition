@@ -22,6 +22,11 @@ public class ScenesManager : MonoBehaviour
         gameOver
     }
 
+    void Start()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
     void Update()
     {
         if (currentSceneNumber != SceneManager.GetActiveScene().buildIndex)
@@ -92,5 +97,10 @@ public class ScenesManager : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    private void OnSceneLoaded(Scene aScene, LoadSceneMode aMode)
+    {
+        GetComponent<GameManager>().SetLivesDisplay(GameManager.playerLives);
     }
 }

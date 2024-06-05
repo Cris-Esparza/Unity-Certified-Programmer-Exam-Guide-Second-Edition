@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopPiece : MonoBehaviour
 {
@@ -14,15 +15,16 @@ public class ShopPiece : MonoBehaviour
 
     void Awake()
     {
-        // icon slot
-        if (GetComponentInChildren<SpriteRenderer>() != null)
+        // update image of shop button
+        if (transform.GetChild(3).GetComponent<Image>() != null)
         {
-            GetComponentInChildren<SpriteRenderer>().sprite = shopSelection.icon;
+            transform.GetChild(3).GetComponent<Image>().sprite = shopSelection.icon;
         }
-        // selection value
+
+        // set text of button item
         if (transform.Find("itemText"))
         {
-            GetComponentInChildren<TextMesh>().text = shopSelection.cost;
+            GetComponentInChildren<Text>().text = shopSelection.cost.ToString();
         }
     }
 }

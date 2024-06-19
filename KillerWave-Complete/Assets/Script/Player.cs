@@ -35,8 +35,11 @@ public class Player : MonoBehaviour, IActorTemplate
 
     private void Update()
     {
-        Movement();
-        Attack();
+        if (Time.timeScale == 1)
+        {
+            Movement();
+            Attack();
+        }
     }
 
     public void ActorStats(SOActorModel actorModel)

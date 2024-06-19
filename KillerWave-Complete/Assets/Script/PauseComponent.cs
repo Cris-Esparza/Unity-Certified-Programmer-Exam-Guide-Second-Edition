@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -17,7 +19,7 @@ public class PauseComponent : MonoBehaviour
     {
         ColorBlock col = GetComponentInChildren<Toggle>().colors;
 
-        if (!switchButton)
+        if (switchButton == false)
         {
             col.normalColor = new Color32(0, 0, 0, 0);
             col.highlightedColor = new Color32(0, 0, 0, 0);
@@ -48,5 +50,19 @@ public class PauseComponent : MonoBehaviour
         pauseScreen.SetActive(true);
         SetPauseButtonActive(false);
         Time.timeScale = 0;
+    }
+
+    public void Resume()
+    {
+        pauseScreen.SetActive(false);
+        SetPauseButtonActive(true);
+        Time.timeScale = 1;
+    }
+
+    public void Quit()
+    {
+        Time.timeScale = 1;
+        GameManager.Instance.GetComponent<ScoreManager>().ResetScore();
+        GameManager.Instance.GetComponent<ScenesManager>().BeginGame(0);
     }
 }

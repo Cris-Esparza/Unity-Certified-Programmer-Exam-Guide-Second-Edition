@@ -1,9 +1,0 @@
-Mock Questions Answers:
-
-Chapter 3:
-Mine	Correct
-A	D
-B	C
-C	C
-B	B
-

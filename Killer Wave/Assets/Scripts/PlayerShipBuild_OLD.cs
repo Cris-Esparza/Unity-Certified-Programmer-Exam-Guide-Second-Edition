@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShipBuild : MonoBehaviour
+public class PlayerShipBuild_OLD : MonoBehaviour
 {
     [SerializeField]
     GameObject[] shopButtons;

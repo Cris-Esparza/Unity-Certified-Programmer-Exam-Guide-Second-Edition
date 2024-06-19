@@ -7,7 +7,7 @@ public class TitleComponent : MonoBehaviour
   {
     if (Input.GetMouseButtonUp(0))
     {
-      SceneManager.LoadScene("shop");
+        SceneManager.LoadScene("shop");
     }
   }
 }

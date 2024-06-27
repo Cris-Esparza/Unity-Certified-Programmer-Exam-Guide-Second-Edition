@@ -19,6 +19,7 @@ public class ShopPiece : MonoBehaviour
 			transform.GetChild(3).GetComponent<Image>().sprite = shopSelection.icon;
 		}
 
+
 		if (transform.Find("itemText"))
 		{
 			GetComponentInChildren<Text>().text = shopSelection.cost.ToString();

@@ -1,12 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using UnityEngine;
 
 public class PauseComponent : MonoBehaviour
 {
     [SerializeField]
     GameObject pauseScreen;
+
+    [SerializeField]
+    AudioMixer masterMixer;
+
+    [SerializeField]
+    GameObject musicSlider;
+
+    [SerializeField]
+    GameObject effectsSlider;
 
     void Awake()
     {
@@ -64,5 +74,15 @@ public class PauseComponent : MonoBehaviour
         Time.timeScale = 1;
         GameManager.Instance.GetComponent<ScoreManager>().ResetScore();
         GameManager.Instance.GetComponent<ScenesManager>().BeginGame(0);
+    }
+
+    public void SetMusicLevelFromSlider()
+    {
+        masterMixer.SetFloat("musicVol", musicSlider.GetComponent<Slider>().value);
+    }
+
+    public void SetEffectsLevelFromSlider()
+    {
+        masterMixer.SetFloat("effectsVol", effectsSlider.GetComponent<Slider>().value);
     }
 }

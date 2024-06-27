@@ -331,6 +331,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseScreen: {fileID: 1341252848}
+  masterMixer: {fileID: 24100000, guid: 44a3e34a725b31d428d5d91296c2813d, type: 2}
+  musicSlider: {fileID: 3252388523470482751}
+  effectsSlider: {fileID: 3252388523470482750}
 --- !u!1 &1742586133
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,6 +695,58 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4620114299235170334, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620114299235170334, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620114299235170334, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620114299235170334, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1741832402}
+    - target: {fileID: 4620114299235170334, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1741832402}
+    - target: {fileID: 4620114299235170334, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620114299235170334, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620114299235170334, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetMusicLevelFromSlider
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620114299235170334, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetEffectsLevelFromSlider
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620114299235170334, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseComponent, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620114299235170334, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PauseComponent, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620114299235170334, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620114299235170334, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5015755614304391542, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -748,6 +803,16 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1741832402}
   m_SourcePrefab: {fileID: 100100000, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+--- !u!1 &3252388523470482750 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8891872679244573250, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+  m_PrefabInstance: {fileID: 3252388523470482749}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3252388523470482751 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2368040022362956333, guid: 59340ce6abd5b2044bedf9abbef30563, type: 3}
+  m_PrefabInstance: {fileID: 3252388523470482749}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3607746836819931562
 PrefabInstance:
   m_ObjectHideFlags: 0

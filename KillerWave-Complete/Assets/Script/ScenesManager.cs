@@ -149,16 +149,14 @@ public class ScenesManager : MonoBehaviour
                             gameEnding = true;
                             if (SceneManager.GetActiveScene().name != "level3")
                             {
-                                GameObject.FindGameObjectWithTag("Player").
-                               GetComponent
-                                <PlayerTransition>().LevelEnds = true;
+                                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerTransition>().LevelEnds = true;
                             }
                             else
                             {
-                                GameObject.FindGameObjectWithTag("Player").
-                               GetComponent
-                                <PlayerTransition>().GameCompleted = true;
+                                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerTransition>().GameCompleted = true;
                             }
+
+                            SendInJsonFormat(SceneManager.GetActiveScene().name);
                             Invoke("NextLevel", 4);
                         }
                     }
@@ -169,6 +167,23 @@ public class ScenesManager : MonoBehaviour
                     GetComponentInChildren<AudioSource>().clip = null;
                     break;
                 }
+        }
+    }
+
+    void SendInJsonFormat(string lastLevel)
+    {
+        if (lastLevel == "level3")
+        {
+            GameStats gameStats = new GameStats();
+            gameStats.livesLeft = GameManager.playerLives;
+            gameStats.completed = System.DateTime.Now.ToString();
+            gameStats.score = GetComponent<ScoreManager>().PlayersScore;
+
+            string json = JsonUtility.ToJson(gameStats, true);
+            Debug.Log(json);
+
+            Debug.Log(Application.persistentDataPath + "/GameStatsSaved.json");
+            System.IO.File.WriteAllText(Application.persistentDataPath + "/GameStatsSaved.json", json);
         }
     }
 }

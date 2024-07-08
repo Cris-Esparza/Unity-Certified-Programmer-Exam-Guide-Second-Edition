@@ -9,6 +9,15 @@ public class Player : MonoBehaviour, IActorTemplate
     int hitPower;
     GameObject actor;
     GameObject fire;
+    float camTravelSpeed;
+
+    public float CamTravelSpeed
+    {
+        get { return camTravelSpeed; }
+        set { camTravelSpeed = value; }
+    }
+
+    float movingScreen;
 
     public int Health
     {
@@ -31,6 +40,7 @@ public class Player : MonoBehaviour, IActorTemplate
         height = 1 / (Camera.main.WorldToViewportPoint(new Vector3(1, 1, 0)).y - .5f);
         width = 1 / (Camera.main.WorldToViewportPoint(new Vector3(1, 1, 0)).x - .5f);
         _Player = GameObject.Find("_Player");
+        movingScreen = width;
     }
 
     private void Update()

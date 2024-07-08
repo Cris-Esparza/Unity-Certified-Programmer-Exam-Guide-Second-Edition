@@ -96,10 +96,15 @@ public class Player : MonoBehaviour, IActorTemplate
 
     void Movement()
     {
+        if (camTravelSpeed > 1)
+        {
+            transform.position += Vector3.right * Time.deltaTime * camTravelSpeed;
+            movingScreen = Time.deltaTime * camTravelSpeed;
+        }
+
         if (Input.GetAxisRaw("Horizontal") > 0)
         {
-            if (transform.localPosition.x < width +
-            width / 0.9f)
+            if (transform.localPosition.x < movingScreen + (width / 0.9f))
             {
                 transform.localPosition += new Vector3
                 (Input.GetAxisRaw("Horizontal")
@@ -108,8 +113,7 @@ public class Player : MonoBehaviour, IActorTemplate
         }
         if (Input.GetAxisRaw("Horizontal") < 0)
         {
-            if (transform.localPosition.x > width +
-            width / 6)
+            if (transform.localPosition.x > movingScreen + width / 6)
             {
                 transform.localPosition += new Vector3
                 (Input.GetAxisRaw("Horizontal")
@@ -135,6 +139,7 @@ public class Player : MonoBehaviour, IActorTemplate
             }
         }
     }
+
     public void Die()
     {
         GameManager.Instance.LifeLost();

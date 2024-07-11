@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyFlee : MonoBehaviour, IActorTemplate {
 
@@ -8,12 +9,48 @@ public class EnemyFlee : MonoBehaviour, IActorTemplate {
     int travelSpeed;
     int hitPower;
     int score;
+    GameObject player;
+    bool gameStarts = false;
+    [SerializeField]
+    float enemyDistanceRun = 200;
+    NavMeshAgent enemyAgent;
 
-	    public void ActorStats(SOActorModel actorModel)
+    void Start()
+    {
+        ActorStats(actorModel);
+        Invoke("DelayedStart", 0.5f);
+    }
+
+    void DelayedStart()
+    {
+        gameStarts = true;
+        player = GameObject.FindGameObjectWithTag("Player");
+        enemyAgent = GetComponent<NavMeshAgent>();
+    }
+
+	public void ActorStats(SOActorModel actorModel)
     {
         health = actorModel.health;
         hitPower = actorModel.hitPower;
         score = actorModel.score;
+        GetComponent<NavMeshAgent>().speed = actorModel.speed;
+    }
+
+    void Update()
+    {
+        if (gameStarts)
+        {
+            if (player != null)
+            {
+                float distance = Vector3.Distance(transform.position, player.transform.position);
+                if (distance < enemyDistanceRun)
+                {
+                    Vector3 disToPlayer = transform.position - player.transform.position;
+                    Vector3 newPos = transform.position + disToPlayer;
+                    enemyAgent.SetDestination(newPos);
+                }
+            }
+        }
     }
 
 	public void TakeDamage(int incomingDamage)
@@ -29,7 +66,7 @@ public class EnemyFlee : MonoBehaviour, IActorTemplate {
         Destroy(this.gameObject);
     }
 
-	    void OnTriggerEnter(Collider other)
+	void OnTriggerEnter(Collider other)
     {
         // if the player or their bullet hits you....
         if (other.tag == "Player")

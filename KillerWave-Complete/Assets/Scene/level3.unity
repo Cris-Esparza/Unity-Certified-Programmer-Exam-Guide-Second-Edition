@@ -990,6 +990,8 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: 504784434981292623, guid: d82453c5486b9a44ab943cd0a907e5d6, type: 2}
     value: {fileID: 2061211469}
+  - key: {fileID: 3778238709293899899, guid: d82453c5486b9a44ab943cd0a907e5d6, type: 2}
+    value: {fileID: 1627780768}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1041333172
@@ -1982,6 +1984,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1586780890}
   m_CullTransparentMesh: 1
+--- !u!1 &1627780768 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1495468925736514, guid: 0770c04b17ae9e44db6d550113870051, type: 3}
+  m_PrefabInstance: {fileID: 2061211467}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1667168991
 GameObject:
   m_ObjectHideFlags: 0

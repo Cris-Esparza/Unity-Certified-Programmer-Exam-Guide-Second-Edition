@@ -36,15 +36,17 @@ public class Player : MonoBehaviour, IActorTemplate
     }
 
     GameObject _Player;
-    float width;
-    float height;
+    //float width;
+    //float height;
+    GameObject[] screenPoints = new GameObject[2];
 
     private void Start()
     {
-        height = 1 / (Camera.main.WorldToViewportPoint(new Vector3(1, 1, 0)).y - .5f);
-        width = 1 / (Camera.main.WorldToViewportPoint(new Vector3(1, 1, 0)).x - .5f);
+        //height = 1 / (Camera.main.WorldToViewportPoint(new Vector3(1, 1, 0)).y - .5f);
+        //width = 1 / (Camera.main.WorldToViewportPoint(new Vector3(1, 1, 0)).x - .5f);
         _Player = GameObject.Find("_Player");
-        movingScreen = width;
+        //movingScreen = width;
+        CalculateBoundaries();
         mobile = false;
         #if UNITY_ANDROID && !UNITY_EDITOR
             mobile = true;
@@ -116,7 +118,7 @@ public class Player : MonoBehaviour, IActorTemplate
     {
         if (Input.GetAxisRaw("Horizontal") > 0)
         {
-            if (transform.localPosition.x < movingScreen + (width / 0.9f))
+            if (transform.localPosition.x < (screenPoints[1].transform.localPosition.x - screenPoints[1].transform.localPosition.x / 30f) + movingScreen)
             {
                 transform.localPosition += new Vector3
                 (Input.GetAxisRaw("Horizontal")
@@ -125,7 +127,7 @@ public class Player : MonoBehaviour, IActorTemplate
         }
         if (Input.GetAxisRaw("Horizontal") < 0)
         {
-            if (transform.localPosition.x > movingScreen + width / 6)
+            if (transform.localPosition.x > (screenPoints[0].transform.localPosition.x + screenPoints[0].transform.localPosition.x / 30f) + movingScreen)
             {
                 transform.localPosition += new Vector3
                 (Input.GetAxisRaw("Horizontal")
@@ -134,7 +136,7 @@ public class Player : MonoBehaviour, IActorTemplate
         }
         if (Input.GetAxisRaw("Vertical") < 0)
         {
-            if (transform.localPosition.y > -height / 3f)
+            if (transform.localPosition.y > (screenPoints[1].transform.localPosition.y - screenPoints[1].transform.localPosition.y / 3f))
             {
                 transform.localPosition += new Vector3
                 (0, Input.GetAxisRaw("Vertical") * Time.
@@ -143,7 +145,7 @@ public class Player : MonoBehaviour, IActorTemplate
         }
         if (Input.GetAxisRaw("Vertical") > 0)
         {
-            if (transform.localPosition.y < height / 2.5f)
+            if (transform.localPosition.y < (screenPoints[0].transform.localPosition.y - screenPoints[0].transform.localPosition.y / 5f))
             {
                 transform.localPosition += new Vector3
                 (0, Input.GetAxisRaw("Vertical") * Time.
@@ -176,6 +178,10 @@ public class Player : MonoBehaviour, IActorTemplate
             transform.position += Vector3.right * Time.deltaTime * camTravelSpeed;
             movingScreen = Time.deltaTime * camTravelSpeed;
         }
+        else
+        {
+            movingScreen = 0;
+        }
     }
 
     void MobileControls()
@@ -194,6 +200,19 @@ public class Player : MonoBehaviour, IActorTemplate
                 rb.velocity = Vector3.zero;
             }
         }
+    }
+
+    void CalculateBoundaries()
+    {
+        screenPoints[0] = new GameObject("p1");
+        screenPoints[1] = new GameObject("p2");
+        Vector3 v1 = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 300));
+        Vector3 v2 = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 300));
+        screenPoints[0].transform.position = v1;
+        screenPoints[1].transform.position = v2;
+        screenPoints[0].transform.SetParent(this.transform.parent);
+        screenPoints[1].transform.SetParent(this.transform.parent);
+        movingScreen = screenPoints[1].transform.position.x;
     }
 }
 

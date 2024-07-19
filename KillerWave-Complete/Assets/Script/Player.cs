@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.AudioSettings;
 
 public class Player : MonoBehaviour, IActorTemplate
 {
@@ -10,6 +11,9 @@ public class Player : MonoBehaviour, IActorTemplate
     GameObject actor;
     GameObject fire;
     float camTravelSpeed;
+    Vector3 direction;
+    Rigidbody rb;
+    public static bool mobile = false;
 
     public float CamTravelSpeed
     {
@@ -41,14 +45,28 @@ public class Player : MonoBehaviour, IActorTemplate
         width = 1 / (Camera.main.WorldToViewportPoint(new Vector3(1, 1, 0)).x - .5f);
         _Player = GameObject.Find("_Player");
         movingScreen = width;
+        mobile = false;
+        #if UNITY_ANDROID && !UNITY_EDITOR
+            mobile = true;
+            InvokeRepeating("Attack", 0, 0.3f);
+            rb = GetComponent<Rigidbody>();
+        #endif
     }
 
     private void Update()
     {
         if (Time.timeScale == 1)
         {
-            Movement();
-            Attack();
+            PlayersSpeedWithCamera();
+            if (mobile)
+            {
+                MobileControls();
+            }
+            else
+            {
+                Movement();
+                Attack();
+            }
         }
     }
 
@@ -96,12 +114,6 @@ public class Player : MonoBehaviour, IActorTemplate
 
     void Movement()
     {
-        if (camTravelSpeed > 1)
-        {
-            transform.position += Vector3.right * Time.deltaTime * camTravelSpeed;
-            movingScreen = Time.deltaTime * camTravelSpeed;
-        }
-
         if (Input.GetAxisRaw("Horizontal") > 0)
         {
             if (transform.localPosition.x < movingScreen + (width / 0.9f))
@@ -147,13 +159,40 @@ public class Player : MonoBehaviour, IActorTemplate
     }
     public void Attack()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") || mobile)
         {
             GameObject bullet = GameObject.Instantiate
             (fire, transform.position, Quaternion.Euler
             (new Vector3(0, 0, 0))) as GameObject;
             bullet.transform.SetParent(_Player.transform);
             bullet.transform.localScale = new Vector3(7, 7, 7);
+        }
+    }
+
+    void PlayerSpeedWithCamera()
+    {
+        if (camTravelSpeed > 1)
+        {
+            transform.position += Vector3.right * Time.deltaTime * camTravelSpeed;
+            movingScreen = Time.deltaTime * camTravelSpeed;
+        }
+    }
+
+    void MobileControls()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 300));
+            touchPosition.z = 0;
+            direction = (touchPosition - transform.position);
+            rb.velocity = new Vector3(direction.x, direction.y, 0) * 5;
+            direction.x += movingScreen;
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                rb.velocity = Vector3.zero;
+            }
         }
     }
 }

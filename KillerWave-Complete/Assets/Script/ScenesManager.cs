@@ -145,8 +145,12 @@ public class ScenesManager : MonoBehaviour
                         //if level is completed
                         if (!gameEnding)
                         {
-                            StartCoroutine(MusicVolume(MusicMode.fadeDown));
                             gameEnding = true;
+                            StartCoroutine(MusicVolume(MusicMode.fadeDown));
+                            GameObject player = GameObject.Find("Player");
+                            player.GetComponent<Rigidbody>().isKinematic = true;
+                            Player.mobile = false;
+                            CancelInvoke();
                             if (SceneManager.GetActiveScene().name != "level3")
                             {
                                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerTransition>().LevelEnds = true;

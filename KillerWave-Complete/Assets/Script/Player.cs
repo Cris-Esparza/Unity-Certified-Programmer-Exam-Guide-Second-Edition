@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using static UnityEngine.AudioSettings;
 
 public class Player : MonoBehaviour, IActorTemplate
@@ -156,6 +157,8 @@ public class Player : MonoBehaviour, IActorTemplate
 
     public void Die()
     {
+        GameObject explode = GameObject.Instantiate(Resources.Load("Prefab/explode")) as GameObject;
+        explode.transform.position = this.gameObject.transform.position;
         GameManager.Instance.LifeLost();
         Destroy(this.gameObject);
     }
@@ -171,7 +174,7 @@ public class Player : MonoBehaviour, IActorTemplate
         }
     }
 
-    void PlayerSpeedWithCamera()
+    void PlayersSpeedWithCamera()
     {
         if (camTravelSpeed > 1)
         {
@@ -186,7 +189,7 @@ public class Player : MonoBehaviour, IActorTemplate
 
     void MobileControls()
     {
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 && EventSystem.current.currentSelectedGameObject == null)
         {
             Touch touch = Input.GetTouch(0);
             Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 300));

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -111,6 +112,12 @@ public class GameManager : MonoBehaviour
     }
     public void LifeLost()
     {
+        StartCoroutine(DelayedLifeLost());
+    }
+
+    IEnumerator DelayedLifeLost()
+    {
+        yield return new WaitForSeconds(2);
         //lose life
         if (playerLives >= 1)
         {

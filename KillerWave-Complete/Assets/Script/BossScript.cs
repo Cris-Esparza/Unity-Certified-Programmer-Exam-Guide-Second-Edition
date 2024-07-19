@@ -13,6 +13,8 @@ public class BossScript : MonoBehaviour
 
 	public void Die(GameObject other)
     {
+        GameObject explode = GameObject.Instantiate(Resources.Load("explode")) as GameObject;
+        explode.transform.position = this.gameObject.transform.position;
         Destroy(other);
     }
 }
